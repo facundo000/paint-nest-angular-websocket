@@ -12,6 +12,7 @@ export class GridWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleConnection(client: Socket) {
     // Enviar estado inicial al cliente
     client.emit('initial-grid', this.gridState);
+    console.log(`Client connected: ${client.id}`);
   }
 
   handleDisconnect(client: Socket) {
@@ -25,5 +26,9 @@ export class GridWsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     
     // Broadcast a todos los clientes
     this.server.emit('cell-updated', data);
+  }
+
+  afterInit(server: Server) {
+    console.log('WebSocket Gateway inicializado');
   }
 }
